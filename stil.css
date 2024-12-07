@@ -17,7 +17,8 @@ BODY {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    min-height: calc(100vh - 40px);
+    box-sizing: border-box;
 }
 
 .carousel {
@@ -31,6 +32,9 @@ BODY {
     background: linear-gradient(145deg, #282828, #1a1a1a);
     padding: 15px;
     backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .puzzles-container {
@@ -114,9 +118,9 @@ BODY {
     }
 
     .carousel-button {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
     }
 
     .prev {
@@ -140,57 +144,118 @@ h2 {
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     margin: 0 auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#table4x4 {
+    display: table;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#table4x4 div[style*="table-row"] {
+    display: table-row;
 }
 
 /* 4x4 Puzzle Tiles */
-.tile1, .tile2, .tile3, .tile4,
-.tile5, .tile6, .tile7, .tile8,
-.tile9, .tile10, .tile11, .tile12,
-.tile13, .tile14, .tile15 {
+#table4x4 div[class^="tile"]:not(.tile16) {
     display: table-cell;
-    width: 100px;
-    height: 100px;
-    border: 2px solid white;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #1DB954;
     background-image: url("img/c.jpg");
     background-repeat: no-repeat;
-    background-size: 400px 400px;
+    background-size: 400% 400%;
     cursor: pointer;
     transition: transform 0.2s;
+}
+
+/* Boş parçalar için ortak stil */
+.tile16, .tile3_9 {
+    display: table-cell;
+    border: 1px solid #1DB954;
+    background: none !important;
+    cursor: pointer;
+}
+
+/* 4x4 boş parça boyutu */
+.tile16 {
+    width: 70px;
+    height: 70px;
 }
 
 /* 3x3 Puzzle Tiles */
-.tile3_1, .tile3_2, .tile3_3,
-.tile3_4, .tile3_5, .tile3_6,
-.tile3_7, .tile3_8 {
+#table3x3 div[class^="tile3_"]:not(.tile3_9) {
     display: table-cell;
     width: 100px;
     height: 100px;
-    border: 2px solid white;
+    border: 1px solid #1DB954;
     background-image: url("img/b.jpg");
     background-repeat: no-repeat;
-    background-size: 300px 300px;
+    background-size: 300% 300%;
     cursor: pointer;
     transition: transform 0.2s;
 }
 
-.tile1:hover, .tile2:hover, .tile3:hover, .tile4:hover,
-.tile5:hover, .tile6:hover, .tile7:hover, .tile8:hover,
-.tile9:hover, .tile10:hover, .tile11:hover, .tile12:hover,
-.tile13:hover, .tile14:hover, .tile15:hover,
-.tile3_1:hover, .tile3_2:hover, .tile3_3:hover,
-.tile3_4:hover, .tile3_5:hover, .tile3_6:hover,
-.tile3_7:hover, .tile3_8:hover {
+/* 3x3 boş parça boyutu */
+.tile3_9 {
+    width: 100px;
+    height: 100px;
+}
+
+#table4x4 div[class^="tile"]:hover,
+#table3x3 div[class^="tile3_"]:not(.tile3_9):hover {
     transform: scale(1.02);
 }
 
-.tile16, .tile3_9 {
-    display: table-cell;
-    width: 100px;
-    height: 100px;
-    border: 2px solid white;
-    background: rgba(255, 255, 255, 0.8);
-    cursor: default;
+@media (max-width: 600px) {
+    .tile16 {
+        width: 45px;
+        height: 45px;
+    }
+
+    .tile3_9 {
+        width: 60px;
+        height: 60px;
+    }
 }
+
+/* Parça pozisyonları */
+.tile1 { background-position: 0% 0%; }
+.tile2 { background-position: 33.33% 0%; }
+.tile3 { background-position: 66.66% 0%; }
+.tile4 { background-position: 100% 0%; }
+
+.tile5 { background-position: 0% 33.33%; }
+.tile6 { background-position: 33.33% 33.33%; }
+.tile7 { background-position: 66.66% 33.33%; }
+.tile8 { background-position: 100% 33.33%; }
+
+.tile9 { background-position: 0% 66.66%; }
+.tile10 { background-position: 33.33% 66.66%; }
+.tile11 { background-position: 66.66% 66.66%; }
+.tile12 { background-position: 100% 66.66%; }
+
+.tile13 { background-position: 0% 100%; }
+.tile14 { background-position: 33.33% 100%; }
+.tile15 { background-position: 66.66% 100%; }
+
+/* 3x3 Puzzle Background Positions */
+/* Row 1 */
+.tile3_1 { background-position: 0% 0%; }
+.tile3_2 { background-position: 50% 0%; }
+.tile3_3 { background-position: 100% 0%; }
+
+/* Row 2 */
+.tile3_4 { background-position: 0% 50%; }
+.tile3_5 { background-position: 50% 50%; }
+.tile3_6 { background-position: 100% 50%; }
+
+/* Row 3 */
+.tile3_7 { background-position: 0% 100%; }
+.tile3_8 { background-position: 50% 100%; }
 
 .new-game-btn {
     padding: 12px 24px;
@@ -219,45 +284,6 @@ h2 {
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-
-/* 4x4 Puzzle Background Positions */
-/* Row 1 */
-.tile1 { background-position: 0% 0%; }
-.tile2 { background-position: 33.33% 0%; }
-.tile3 { background-position: 66.66% 0%; }
-.tile4 { background-position: 100% 0%; }
-
-/* Row 2 */
-.tile5 { background-position: 0% 33.33%; }
-.tile6 { background-position: 33.33% 33.33%; }
-.tile7 { background-position: 66.66% 33.33%; }
-.tile8 { background-position: 100% 33.33%; }
-
-/* Row 3 */
-.tile9 { background-position: 0% 66.66%; }
-.tile10 { background-position: 33.33% 66.66%; }
-.tile11 { background-position: 66.66% 66.66%; }
-.tile12 { background-position: 100% 66.66%; }
-
-/* Row 4 */
-.tile13 { background-position: 0% 100%; }
-.tile14 { background-position: 33.33% 100%; }
-.tile15 { background-position: 66.66% 100%; }
-
-/* 3x3 Puzzle Background Positions */
-/* Row 1 */
-.tile3_1 { background-position: 0% 0%; }
-.tile3_2 { background-position: 50% 0%; }
-.tile3_3 { background-position: 100% 0%; }
-
-/* Row 2 */
-.tile3_4 { background-position: 0% 50%; }
-.tile3_5 { background-position: 50% 50%; }
-.tile3_6 { background-position: 100% 50%; }
-
-/* Row 3 */
-.tile3_7 { background-position: 0% 100%; }
-.tile3_8 { background-position: 50% 100%; }
 
 .welcome-section {
     display: flex;
@@ -530,6 +556,37 @@ h2 {
     margin-top: 10px;
 }
 
+@media (max-width: 600px) {
+    .counter-box {
+        padding: 10px;
+    }
+
+    .counter-grid {
+        gap: 10px;
+    }
+
+    .time-block {
+        min-width: 60px;
+    }
+
+    .counter-number {
+        font-size: 1.8rem;
+    }
+
+    .counter-label {
+        font-size: 0.9rem;
+    }
+
+    .counter-text {
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+
+    .heart {
+        font-size: 1rem;
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -581,5 +638,53 @@ h2 {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+        min-height: calc(100vh - 20px);
+    }
+
+    .carousel {
+        width: 90%;
+        padding: 10px;
+        margin: 0 auto;
+    }
+
+    .carousel-button {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+
+    .prev {
+        left: 5px;
+    }
+
+    .next {
+        right: 5px;
+    }
+
+    /* Mobilde puzzle parçaları için özel ayarlar */
+    #table4x4 div[class^="tile"]:not(.tile16) {
+        width: 45px;
+        height: 45px;
+    }
+
+    .tile16 {
+        width: 45px;
+        height: 45px;
+    }
+
+    #table3x3 div[class^="tile3_"]:not(.tile3_9) {
+        width: 60px;
+        height: 60px;
+    }
+
+    .tile3_9 {
+        width: 60px;
+        height: 60px;
     }
 }
